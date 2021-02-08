@@ -1,0 +1,27 @@
+{
+  "name": "cubicle",
+  "version": "1.0.0",
+  "description": "JS Web Workshop - NodeJS, ExpressJS, MongoDB, Mongoose",
+  "main": "index.js",
+  "scripts": {
+    "start": "SET NODE_ENV=development && nodemon ./index.js",
+    "prod": "SET NODE_ENV=production && node ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiglenaPencheva/cubicle.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MiglenaPencheva/cubicle/issues"
+  },
+  "homepage": "https://github.com/MiglenaPencheva/cubicle#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
