@@ -4,6 +4,10 @@ const fs = require('fs');
 const path = require('path');
 let productsDB = require('../config/products.json');
 
+function getAll() {
+    return productsDB;
+}
+
 function create(data) {
     try {
         if (data.name === '') {
@@ -44,6 +48,6 @@ function create(data) {
 }
 
 module.exports = {
-    create
-
+    create,
+    getAll
 }

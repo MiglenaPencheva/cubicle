@@ -1,10 +1,11 @@
 const { Router } = require('express');
-const productService = require('../services/productService');
+const { getAll, create } = require('../services/productService');
 
 const router = Router();
 
 router.get('/', (req, res) => {
-    res.render('home', { title: 'Browse' });
+    let products = getAll();
+    res.render('home', { title: 'Browse', products });
 });
 
 router.get('/create', (req, res) => {
@@ -12,7 +13,7 @@ router.get('/create', (req, res) => {
 });
 
 router.post('/create', (req, res) => {
-    productService.create(req.body);
+    create(req.body);
     res.redirect('/products');
 });
 
