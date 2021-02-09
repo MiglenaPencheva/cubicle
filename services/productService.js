@@ -8,6 +8,10 @@ function getAll() {
     return productsDB;
 }
 
+function getCubeById(id) {
+    return productsDB.find(c => c.id == id);
+}
+
 function create(data) {
     try {
         if (data.name === '') {
@@ -48,6 +52,7 @@ function create(data) {
 }
 
 module.exports = {
+    getAll,
+    getCubeById,
     create,
-    getAll
 }

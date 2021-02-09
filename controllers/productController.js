@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getAll, create } = require('../services/productService');
+const { getAll, create, getCubeById } = require('../services/productService');
 
 const router = Router();
 
@@ -18,7 +18,8 @@ router.post('/create', (req, res) => {
 });
 
 router.get('/details/:productId', (req, res) => {
-    res.render('details', { title: 'Product details' });
+    let product = getCubeById(req.params.productId);
+    res.render('details', { title: 'Product details', product });
 });
 
 
