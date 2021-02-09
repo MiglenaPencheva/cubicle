@@ -4,8 +4,22 @@ const fs = require('fs');
 const path = require('path');
 let productsDB = require('../config/products.json');
 
-function getAll() {
-    return productsDB;
+function getAll(query) {
+    let result = productsDB;
+
+    if (query.search) {
+        result = result.filter(x => x.name.toLowerCase().includes(query.search));
+    }
+
+    if (query.from) {
+        result = result.filter(x => Number(x.level) >= query.from);
+    }
+
+    if (query.to) {
+        result = result.filter(x => Number(x.level) <= query.to);
+    }
+
+    return result;
 }
 
 function getCubeById(id) {
@@ -39,7 +53,7 @@ function create(data) {
 
         productsDB.push(cube);
 
-        fs.writeFile(__dirname + '/../config/products.json', JSON.stringify(productsDB), (err) => {
+        fs.writeFile(path.join(__dirname, '../config/products.json'), JSON.stringify(productsDB), (err) => {
             if (err) {
                 console.log(err);
                 return;

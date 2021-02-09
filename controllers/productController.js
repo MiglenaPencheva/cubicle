@@ -4,7 +4,7 @@ const { getAll, create, getCubeById } = require('../services/productService');
 const router = Router();
 
 router.get('/', (req, res) => {
-    let products = getAll();
+    let products = getAll(req.query);
     res.render('home', { title: 'Browse', products });
 });
 
