@@ -1,2 +1,2 @@
 # cubicle
-JS Web Workshop - NodeJS, ExpressJS, MongoDB, Mongoose
+Workshop - JS Web with NodeJS, ExpressJS
