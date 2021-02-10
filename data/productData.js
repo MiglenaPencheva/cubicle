@@ -16,7 +16,7 @@ function create(product) {
 
     return fs.writeFile(
         path.join(__dirname, '../config/products.json'),
-        JSON.stringify(productsDB)
+        JSON.stringify(productsDb)
     );
 }
 
