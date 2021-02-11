@@ -1,3 +1,4 @@
+const Accessory = require('../models/Accessory');
 const Cube = require('../models/Cube');
 
 function getAll(query) {
@@ -25,8 +26,15 @@ function create(data) {
     return cube.save();
 }
 
+async function attachAccessory(productId, accessoryId) {
+    let product = await Cube.findById(productId);
+    let accessory = await Accessory.findById(accessoryId);
+    
+}
+
 module.exports = {
     getAll,
     getProductById,
     create,
+    attachAccessory
 }
