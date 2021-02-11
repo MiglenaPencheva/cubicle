@@ -23,8 +23,8 @@ router.post('/create', (req, res) => {
 });
 
 router.get('/details/:productId', async (req, res) => {
-    let product = await productService.getProductById(req.params.productId);
-    res.render('details', { title: 'Product details', product });
+    let product = await productService.getProductByIdWithAccessories(req.params.productId);
+    res.render('details', { title: 'Product Details', product });
 });
 
 router.get('/:productId/attach', async (req, res) => {
@@ -33,9 +33,9 @@ router.get('/:productId/attach', async (req, res) => {
     res.render('attachAccessory', { product, accessories });
 });
 
-router.post('/:productId/attach', async (req, res) => {
+router.post('/:productId/attach', (req, res) => {
     productService.attachAccessory(req.params.productId, req.body.accessory)
-        .then(() => res.redirect(`products/details/{req.params.productId}`))
+        .then(() => res.redirect(`/products/details/${req.params.productId}`))
 });
 
 module.exports = router;
