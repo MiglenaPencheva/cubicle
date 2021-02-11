@@ -1,13 +1,7 @@
-const uniqid = require('uniqid');
 const Cube = require('../models/Cube');
-const productData = require('../data/productData');
 
 function getAll(query) {
-    let products = productData.getAll();
-
-    console.log(products);
-    console.log(query);
-    console.log(query.search);
+    let products = Cube.find({}).lean();
 
     if (query.search) {
         products = products.filter(x => x.name.toLowerCase().includes(query.search.toLowerCase()));
@@ -23,40 +17,12 @@ function getAll(query) {
 }
 
 function getProductById(id) {
-    return productData.getProductById(id);
+    return Cube.findById(id).lean();
 }
 
 function create(data) {
-    try {
-        if (data.name === '') {
-            throw new Error('Name is required');
-        }
-        if (data.description === '') {
-            throw new Error('Description is required');
-        }
-        if (data.level < 1 || data.level > 6) {
-            throw new Error('Dificulty Level is required');
-        }
-        if (data.imageUrl === '') {
-            throw new Error('Image is required');
-        }
-        if (data.imageUrl.slice(0, 7) != 'http://' && data.imageUrl.slice(0, 8) != 'https://') {
-            throw new Error('Invalid image URL');
-        }
-
-        let cube = new Cube(
-            uniqid(),
-            data.name,
-            data.description,
-            data.imageUrl,
-            data.difficultyLevel
-        );
-
-        return productData.create(cube);
-
-    } catch (error) {
-        console.log(error);
-    }
+    let cube = new Cube(data);
+    return cube.save();
 }
 
 module.exports = {

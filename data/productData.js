@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs/promises');
 const path = require('path');
 let productsDb = require('../config/products.json');
 
@@ -12,12 +12,7 @@ function getProductById(id) {
 }
 
 function create(product) {
-    productsDb.push(product);
-
-    return fs.writeFile(
-        path.join(__dirname, '../config/products.json'),
-        JSON.stringify(productsDb)
-    );
+    // return save(product);
 }
 
 

@@ -4,9 +4,12 @@ const config = require('./config/config');
 const routes = require('./routs');
 const app = express();
 
-const expressConfig = require('./config/express');
-expressConfig(app);
-// съкратен запис:  require('./config/express')(app);
+require('./config/express')(app);
+// дълъг запис:
+// const expressConfig = require('./config/express');
+// expressConfig(app);
+
+require('./config/mongoose')(app);
 
 app.use(routes);
 
