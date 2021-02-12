@@ -1,8 +1,8 @@
 const Accessory = require('../models/Accessory');
 const Cube = require('../models/Cube');
 
-function getAll(query) {
-    let products = Cube.find({}).lean();
+async function getAll(query) {
+    let products = await Cube.find({}).lean();
 
     if (query.search) {
         products = products.filter(x => x.name.toLowerCase().includes(query.search.toLowerCase()));
