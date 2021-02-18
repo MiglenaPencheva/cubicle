@@ -17,10 +17,10 @@ router.post('/login', async (req, res) => {
         let token = await authService.login({ username, password });
 
         res.cookie(COOKIE_NAME, token);
-        res.redirect('/auth/login');
+        res.redirect('/products');
 
     } catch (error) {
-        console.log(error);
+        res.render('login', { error });
     }
 });
 
@@ -32,7 +32,7 @@ router.post('/register' , async (req, res) => {
             return res.render('register', { error: { message: 'Password missmatch!' }}); 
         }
         let user = await authService.register({ username, password });
-        res.redirect('/');
+        res.redirect('/auth/login');
 
     } catch (error) {
         res.render('register', {error});
