@@ -1,8 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const { SALT_ROUNDS } = require('../config/config');
-const { SECRET } = require('../config/config');
+const { SALT_ROUNDS, SECRET } = require('../config/config');
 
 async function register({ username, password }) {
     // check for existing username
