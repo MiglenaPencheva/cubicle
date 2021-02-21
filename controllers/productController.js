@@ -18,7 +18,7 @@ router.get('/create', isAuthenticated, (req, res) => {
 });
 
 router.post('/create', isAuthenticated, (req, res) => {
-    productService.create(req.body, req.user)
+    productService.create(req.body, req.user._id)
         .then(() => res.redirect('/products'))
         .catch(() => res.status(500).end())
 });
@@ -52,5 +52,19 @@ router.post('/:productId/edit', isAuthenticated, (req, res) => {
             res.redirect(`/products/details/${req.params.productId}`);
         });
 });
+
+router.get('/:productId/delete', isAuthenticated, (req, res) => {
+    productService.getProductById(req.params.productId)
+        .then(product => {
+            res.render('deleteCube', product);
+        });
+});
+
+router.post('/:productId/delete', isAuthenticated, (req, res) => {
+    productService.deleteById(req.params.productId)
+        .then(deleted => res.redirect('/products'));
+});
+
+
 
 module.exports = router;

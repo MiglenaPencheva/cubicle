@@ -42,11 +42,16 @@ function updateById(id, data) {
     return Cube.updateOne({_id: id}, data);
 }
 
+function deleteById(id) {
+    return Cube.deleteOne({ _id: id })
+}
+
 module.exports = {
     getAll,
     getProductById,
     getProductByIdWithAccessories,
     create,
     attachAccessory,
-    updateById
+    updateById,
+    deleteById
 }
