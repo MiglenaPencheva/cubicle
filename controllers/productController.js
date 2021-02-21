@@ -56,12 +56,23 @@ router.post('/:productId/edit', isAuthenticated, (req, res) => {
 router.get('/:productId/delete', isAuthenticated, (req, res) => {
     productService.getProductById(req.params.productId)
         .then(product => {
-            res.render('deleteCube', product);
+            if (req.user._id != product.creator) {
+                res.redirect('/products');
+            } else {
+                res.render('deleteCube', product);
+            }
         });
 });
 
 router.post('/:productId/delete', isAuthenticated, (req, res) => {
-    productService.deleteById(req.params.productId)
+    productService.getProductById(req.params.productId)
+        .then(product => {
+            if (product._id !== req.user._id) {
+                return res.redirect('/products');
+            }
+            // res.render('deleteCube', product);
+            return productService.deleteById(req.params.productId)
+        })
         .then(deleted => res.redirect('/products'));
 });
 
