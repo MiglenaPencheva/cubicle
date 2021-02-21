@@ -38,10 +38,15 @@ async function attachAccessory(productId, accessoryId) {
     return product.save();
 }
 
+function updateById(id, data) {
+    return Cube.updateOne({_id: id}, data);
+}
+
 module.exports = {
     getAll,
     getProductById,
     getProductByIdWithAccessories,
     create,
-    attachAccessory
+    attachAccessory,
+    updateById
 }

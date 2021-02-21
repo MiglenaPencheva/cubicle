@@ -39,4 +39,18 @@ router.post('/:productId/attach', isAuthenticated, (req, res) => {
         .then(() => res.redirect(`/products/details/${req.params.productId}`))
 });
 
+router.get('/:productId/edit', isAuthenticated, (req, res) => {
+    productService.getProductById(req.params.productId)
+        .then(product => {
+            res.render('editCube', product);
+        });
+});
+
+router.post('/:productId/edit', isAuthenticated, (req, res) => {
+    productService.updateById(req.params.productId, req.body)
+        .then(updated => {
+            res.redirect(`/products/details/${req.params.productId}`);
+        });
+});
+
 module.exports = router;
