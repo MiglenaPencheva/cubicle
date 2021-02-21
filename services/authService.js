@@ -20,9 +20,9 @@ const login = async ({ username, password }) => {
     if (!user) throw { message: 'Wrong username or password!' };
 
     let isEqual = await bcrypt.compare(password, user.password);
-    if (isEqual == false) throw { message: 'Wrong password!' };
+    if (isEqual == false) {throw { message: 'Wrong password!' }};
 
-    let token = jwt.sign({ _id: user._id}, SECRET);
+    let token = jwt.sign({ _id: user._id }, SECRET);
     return token;
 }
 

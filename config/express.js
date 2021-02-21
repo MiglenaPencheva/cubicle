@@ -1,5 +1,7 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
+const cookieParser = require('cookie-parser');
+const authMiddleware = require('../middlewares/authMiddleware');
 
 function setUpExpress(app) {
     app.engine('hbs', handlebars({
@@ -13,6 +15,10 @@ function setUpExpress(app) {
     app.use(express.urlencoded({
         extended: true
     }));
+
+    app.use(cookieParser());
+
+    app.use(authMiddleware());
 }
 
 module.exports = setUpExpress;
