@@ -4,36 +4,51 @@ const isGuest = require('../middlewares/isGuest');
 const isAuthenticated = require('../middlewares/isAuthenticated');
 const authService = require('../services/authService');
 const { COOKIE_NAME } = require('../config/config');
-
-router.get('/login', isGuest, (req, res) => {
-    res.render('login');
-});
+const validator = require('validator');
 
 router.get('/register', isGuest, (req, res) => {
     res.render('register');
 });
+
+
 
 router.post('/login', isGuest, async (req, res) => {
     const { username, password } = req.body;
 
     try {
         let token = await authService.login({ username, password });
-
+        
         res.cookie(COOKIE_NAME, token);
         res.redirect('/products');
-
+        
     } catch (error) {
         res.render('login', { error });
     }
 });
 
+router.get('/login', isGuest, (req, res) => {
+    res.render('login');
+});
+
 router.post('/register', isGuest , async (req, res) => {
     const { username, password, repeatPassword } = req.body;
     
+    let isStrongPassword = validator.isStrongPassword(password, { 
+        minLength: 8, 
+        minLowercase: 1, 
+        minUppercase: 1, 
+        minNumbers: 1, 
+        minSymbols: 1, 
+    });
+
     try {
-        if (password !== repeatPassword) {
-            return res.render('register', { error: { message: 'Password missmatch!' }}); 
+        if (!isStrongPassword) {
+            throw { message: 'Stronger password required' };
         }
+        if (password !== repeatPassword) {
+            throw { message: 'Password missmatch!' }; 
+        }
+        
         let user = await authService.register({ username, password });
         res.redirect('/auth/login');
 
