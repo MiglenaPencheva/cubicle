@@ -39,28 +39,29 @@ router.post(
     async (req, res) => {
         const { username, password, repeatPassword } = req.body;
 
-        let isStrongPassword = validator.isStrongPassword(password, { 
-            minLength: 8, 
-            minLowercase: 1, 
-            minUppercase: 1, 
-            minNumbers: 1, 
-            minSymbols: 1, 
-        });
-
+        // let isStrongPassword = validator.isStrongPassword(password, { 
+        //     minLength: 8, 
+        //     minLowercase: 1, 
+        //     minUppercase: 1, 
+        //     minNumbers: 1, 
+        //     minSymbols: 1, 
+        // });
 
         try {
             // if (!isStrongPassword) {
             //     throw { message: 'Stronger password required', username: req.body.username };
             // }
-            // if (password !== repeatPassword) {
-            //     throw { message: 'Password missmatch!' };
-            // }
+            if (password !== repeatPassword) {
+                throw { error: {message: 'Password missmatch!' }};
+            }
 
             let user = await authService.register({ username, password });
             res.redirect('/auth/login');
 
-        } catch (error) {
+        } catch (err) {
             // let error = Object.keys(err?.errors).map(x => ({message: err.errors[x].properties.message}))[0];
+            let error = Object.keys(err?.errors).map(x => ({ message: err.errors[x].message}))[0];
+            
             res.render('register', { error });
         }
     });
